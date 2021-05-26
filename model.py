@@ -27,6 +27,7 @@ import pandas as pd
 import pickle
 import json
 
+
 def _preprocess_data(data):
     """Private helper function to preprocess data for model prediction.
 
@@ -59,14 +60,14 @@ def _preprocess_data(data):
     # ---------------------------------------------------------------
 
     # ----------- Replace this code with your own preprocessing steps --------
-    
-
-    feature_vector_df = feature_vector_df[(feature_vector_df['Commodities'] == 'APPLE GOLDEN DELICIOUS')]
-    predict_vector = feature_vector_df[['Total_Qty_Sold','Stock_On_Hand']]
-                                
+    feature_vector_df = feature_vector_df[feature_vector_df.columns.difference(['Commodities', 'Date', 'Province', 'Container', 'Size_Grade'])]
+    X_test = feature_vector_df[['High_Price', 'Low_Price', 'Sales_Total',
+                                'Stock_On_Hand', 'Total_Kg_Sold',
+                                'Total_Qty_Sold', 'Weight_Kg']]            
+                           
     # ------------------------------------------------------------------------
-
-    return predict_vector
+    return X_test
+    
 
 def load_model(path_to_model:str):
     """Adapter function to load our pretrained model into memory.
